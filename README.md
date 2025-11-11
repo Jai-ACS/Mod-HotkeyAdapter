@@ -1,11 +1,11 @@
-# Mobile Key Bridge
-Mod that helps bridge mods that require keyboard shortcut to use. This allows mods that originally require keyboard (usually to launch a configuration dialog). This mod provides an extra button in the menu where bridged mods could be launched.
+# Mobile Hotkey Bridge
+Mod that helps bridge mods that require hotkey to use. This mod provides a bridging interface where functionalities originally triggered by hotkeys could be activated.
 
 # Interfacing
-In order for your mod to be bridged, you need to interface your mod with this bridge.
+In order for a mod to be bridged, it has to first interface with this bridging mod.
 
 ```Lua
-local Bridge = GameMain:GetMod("Jai_MobileKeyBridge")
+local Bridge = GameMain:GetMod("Jai_MobileHotkeyBridge")
 ...
 ...
 Bridge:register("Mod Name", "Function Name",
