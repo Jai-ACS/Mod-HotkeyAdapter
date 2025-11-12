@@ -25,7 +25,7 @@ local tbWindow = Windows:CreateWindow("ModListWindow")
 
 function MobileHotkeyBridgeMod:OnInit()
 	local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-	CS.Wnd_GameMain._Instance.UIInfo.m_MainMenu:AddChild(openButton)
+	CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
 	
 	openButton:GetChild("button").onClick:Add(
 		function()
