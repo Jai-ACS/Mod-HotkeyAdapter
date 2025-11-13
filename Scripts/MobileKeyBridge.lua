@@ -4,8 +4,17 @@ local Windows = GameMain:GetMod("Windows")
 local tbWindow = Windows:CreateWindow("ModListWindow")
 
 function MobileHotkeyBridgeMod:OnInit()
+	CS.WorldLuaHelper():ShowMsgBox("Init")
 	local tbEventMod = GameMain:GetMod("_Event")
 	tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
+end
+
+function MobileHotkeyBridge:OnLoad()
+	CS.WorldLuaHelper():ShowMsgBox("Load")
+end
+
+function MobileHotkeyBridge:OnEnter()
+	CS.WorldLuaHelper():ShowMsgBox("Enter")
 end
 
 function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
