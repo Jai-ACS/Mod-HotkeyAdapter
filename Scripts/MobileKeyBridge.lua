@@ -6,18 +6,16 @@ local tbWindow = Windows:CreateWindow("ModListWindow")
 function MobileHotkeyBridgeMod:OnInit()
 	local tbEventMod = GameMain:GetMod("_Event")
 	--tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
-
-	if type(coroutine.yield) ~= 'function' then
-		CS.WorldLuaHelper():ShowMsgBox("No coroutine")
-	end
-
-	if CS.UnityEngine.WaitForSeconds ~= nil then
-		CS.WorldLuaHelper():ShowMsgBox("No unity")
-	end
 end
 
 function MobileHotkeyBridgeMod:OnRender()
-	self:AttachButton()
+	if self:AttachButton() then
+		coroutine.yield(CS.UnityEngine.WaitForSeconds(10.0))
+		CS.WorldLuaHelper():ShowMsgBox("Long")
+	else
+		coroutine.yield(CS.UnityEngine.WaitForSeconds(1.5))
+		CS.WorldLuaHelper():ShowMsgBox("Short")
+	end
 end
 
 -- function MobileHotkeyBridgeMod:Test()
@@ -58,7 +56,11 @@ function MobileHotkeyBridgeMod:AttachButton()
 				tbWindow:Show()
 			end
 		)
+
+		return true
 	end
+
+	return false
 	
 	-- local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
 	-- CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
