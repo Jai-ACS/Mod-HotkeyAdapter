@@ -5,41 +5,51 @@ local tbWindow = Windows:CreateWindow("ModListWindow")
 
 function MobileHotkeyBridgeMod:OnInit()
 	local tbEventMod = GameMain:GetMod("_Event")
-	tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
+	--tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
 end
 
-function MobileHotkeyBridgeMod:Test()
-	local window = CS.Wnd_GameMain.Instance
+function MobileHotkeyBridgeMod:OnRender()
+	self:AttachButton()
+	CS.WorldLuaHelper():ShowMsgBox("Render")
+end
 
-	if not window.__OnInitHooked then    
-		-- Store the original OnInit method to call it later (standard practice)
-		window.__OriginalOnInit = window.OnInit
+-- function MobileHotkeyBridgeMod:Test()
+-- 	local window = CS.Wnd_GameMain.Instance
+
+-- 	if not window.__OnInitHooked then    
+-- 		-- Store the original OnInit method to call it later (standard practice)
+-- 		window.__OriginalOnInit = window.OnInit
         
-		-- Override the method
-		function window:OnInit()
-			-- Call the original C# OnInit first!
-			if self.__OriginalOnInit then
-				self.__OriginalOnInit(self)
-			end
+-- 		-- Override the method
+-- 		function window:OnInit()
+-- 			-- Call the original C# OnInit first!
+-- 			if self.__OriginalOnInit then
+-- 				self.__OriginalOnInit(self)
+-- 			end
 			
-			-- Run your button-adding logic
-			MobileHotkeyBridgedMod:AttachButton()
-        end
+-- 			-- Run your button-adding logic
+-- 			MobileHotkeyBridgedMod:AttachButton()
+--         end
 
-		MobileHotkeyBridgedMod:AttachButton()
-		pWnd.__OnInitHooked = true
-    end
-end
+-- 		MobileHotkeyBridgedMod:AttachButton()
+-- 		pWnd.__OnInitHooked = true
+--     end
+-- end
 
 function MobileHotkeyBridgeMod:AttachButton()
-	local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-	CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
-	
-	openButton:GetChild("button").onClick:Add(
-		function()
-			tbWindow:Show()
-		end
-	)
+	if not self.attachedButton then
+		local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
+		CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
+		
+		openButton:GetChild("button").onClick:Add(
+			function()
+				tbWindow:Show()
+			end
+		)
+
+		self.attachedButton = true
+	end
+
 end
 
 function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
@@ -52,16 +62,7 @@ function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
 	
 	-- if pWnd == CS.Wnd_GameMain.Instance and iArg == 1 then
 	if pWnd == CS.Wnd_GameMain.Instance then
-		-- local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-		-- pWnd.UIInfo.m_MainMenu:AddChild(openButton)
-		
-		-- openButton:GetChild("button").onClick:Add(
-		-- 	function()
-		-- 		tbWindow:Show()
-		-- 	end
-		-- )
-
-		self:Test()
+		self:AttachButton()
 	end
 end
 
