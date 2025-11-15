@@ -4,22 +4,17 @@ local Windows = GameMain:GetMod("Windows")
 local tbWindow = Windows:CreateWindow("ModListWindow")
 
 function MobileHotkeyBridgeMod:OnInit()
-	self.initialized = self.initialized or false
-
-	if self.initialized == false then
-		local tbEventMod = GameMain:GetMod("_Event")
-		tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
-		self.initialized = true
-	end
+	local tbEventMod = GameMain:GetMod("_Event")
+	tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
 end
 
 function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
 	local pWnd = pObjs[0]
 	local iArg = pObjs[1]
 
-	-- if pWnd == CS.Wnd_GameMain.Instance then
-	-- 	CS.WorldLuaHelper():ShowMsgBox(iArg)
-	-- end
+	if pWnd == CS.Wnd_GameMain.Instance then
+		CS.WorldLuaHelper():ShowMsgBox("Window")
+	end
 	
 	if pWnd == CS.Wnd_GameMain.Instance and iArg == 1 then
 		local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
