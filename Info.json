@@ -3,7 +3,7 @@
 	"DisplayName": "Hotkey Adapter",
 	"GameVersion": 1.2,
 	"Version": 0.1,
-	"Desc": "Test",
+	"Desc": "Mod that acts as an adapter/bridge for mods with hotkey(s). This mod provides a bridging interface where functionalities originally triggered by hotkeys could be activated.",
 	"Author": "Jai",
 	"UIPackage": "UI/Jai_HotkeyAdapter",
 	"Tags": ["Function","Usability"],
