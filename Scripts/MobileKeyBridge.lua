@@ -10,7 +10,6 @@ end
 
 function MobileHotkeyBridgeMod:OnRender()
 	self:AttachButton()
-	CS.WorldLuaHelper():ShowMsgBox("Render")
 end
 
 -- function MobileHotkeyBridgeMod:Test()
@@ -37,19 +36,29 @@ end
 -- end
 
 function MobileHotkeyBridgeMod:AttachButton()
-	if not self.attachedButton then
+	local mainWindow = CS.Wnd_GameMain.Instance
+	local uiInfo = mainWindow and mainWindow.UIInfo
+	local mainMenu = uiInfo and uiInfo.m_MainMenu
+
+	if (mainMenu ~= null) then
 		local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-		CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
-		
+		mainMenu:AddChild(openButton)
+	
 		openButton:GetChild("button").onClick:Add(
 			function()
 				tbWindow:Show()
 			end
 		)
-
-		self.attachedButton = true
 	end
-
+	
+	-- local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
+	-- CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
+	
+	-- openButton:GetChild("button").onClick:Add(
+	-- 	function()
+	-- 		tbWindow:Show()
+	-- 	end
+	-- )
 end
 
 function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
