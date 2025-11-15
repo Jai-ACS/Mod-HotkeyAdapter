@@ -4,7 +4,7 @@ local Windows = GameMain:GetMod("Windows")
 local tbWindow = Windows:CreateWindow("ModListWindow")
 
 function Mod:OnRender()
-	-- Using OnRender() because the game 
+	-- Using OnRender() because the game seems to programmatically change the UI components when switching between sect and map exploration screens
 	
 	if self.lastCheck == nil or CS.UnityEngine.Time.time > self.lastCheck + 1.5 then -- Check every 1.5 seconds to reduce comprehensive checks with GetChild()
 		self.lastCheck = CS.UnityEngine.Time.time -- Set check time first, OnRender() may be asynchronous and we don't want the next cycle to enter
