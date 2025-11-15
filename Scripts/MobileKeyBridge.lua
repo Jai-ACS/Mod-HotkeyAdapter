@@ -26,6 +26,7 @@ function MobileHotkeyBridgeMod:Test()
 			MobileHotkeyBridgedMod:AttachButton()
         end
 
+		MobileHotkeyBridgedMod:AttachButton()
 		pWnd.__OnInitHooked = true
     end
 end
