@@ -3,28 +3,24 @@ local MobileHotkeyBridgeMod = GameMain:GetMod("Jai_MobileHotkeyBridge")
 local Windows = GameMain:GetMod("Windows")
 local tbWindow = Windows:CreateWindow("ModListWindow")
 
-function MobileHotkeyBridgeMod:OnInit()
-	local tbEventMod = GameMain:GetMod("_Event")
-	--tbEventMod:RegisterEvent(g_emEvent.WindowEvent, self.OnWindowEvent, self)
-end
-
 function MobileHotkeyBridgeMod:OnRender()
-	if self.lastCheck == nil or CS.UnityEngine.Time.time > self.lastCheck + 1.5 then
-		self.lastCheck = CS.UnityEngine.Time.time
-		self:AttachButton()
+	-- Using OnRender() because the game 
+	
+	if self.lastCheck == nil or CS.UnityEngine.Time.time > self.lastCheck + 1.5 then -- Check every 1.5 seconds to reduce comprehensive checks with GetChild()
+		self.lastCheck = CS.UnityEngine.Time.time -- Set check time first, OnRender() may be asynchronous and we don't want the next cycle to enter
+		self:CheckAndAttachButton()
 	end
 end
 
-function MobileHotkeyBridgeMod:AttachButton()
+function MobileHotkeyBridgeMod:CheckAndAttachButton()
 	local mainWindow = CS.Wnd_GameMain.Instance
 	local uiInfo = mainWindow and mainWindow.UIInfo
 	local mainMenu = uiInfo and uiInfo.m_MainMenu
 
-	if (mainMenu ~= nil and mainMenu:GetChild("TEST") == nil) then
+	if (mainMenu ~= nil and mainMenu:GetChild("Jai_MobileHotkeyBridge_Button") == nil) then
 		local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-		openButton.name = "TEST"
+		openButton.name = "Jai_MobileHotkeyBridge_Button"
 		mainMenu:AddChild(openButton)
-		CS.WorldLuaHelper():ShowMsgBox("Added button")
 	
 		openButton:GetChild("button").onClick:Add(
 			function()
@@ -32,41 +28,7 @@ function MobileHotkeyBridgeMod:AttachButton()
 			end
 		)
 	end
-	
-	-- local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
-	-- CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
-	
-	-- openButton:GetChild("button").onClick:Add(
-	-- 	function()
-	-- 		tbWindow:Show()
-	-- 	end
-	-- )
 end
-
-function MobileHotkeyBridgeMod:OnWindowEvent(pThing, pObjs)
-	local pWnd = pObjs[0]
-	local iArg = pObjs[1]
-
-	--if pWnd == CS.Wnd_GameMain.Instance then
-		--CS.WorldLuaHelper():ShowMsgBox("Window")
-	--end
-	
-	-- if pWnd == CS.Wnd_GameMain.Instance and iArg == 1 then
-	if pWnd == CS.Wnd_GameMain.Instance then
-		self:AttachButton()
-	end
-end
-
--- function MobileHotkeyBridgeMod:OnInit()
--- 	local openButton = UIPackage.CreateObject("Jai_MobileHotkeyBridge", "OpenButton")
--- 	CS.Wnd_GameMain.Instance.UIInfo.m_MainMenu:AddChild(openButton)
-	
--- 	openButton:GetChild("button").onClick:Add(
--- 		function()
--- 			tbWindow:Show()
--- 		end
--- 	)
--- end
 
 -- Utility to create a table/map that retains insertion order
 function MobileHotkeyBridgeMod:createOrderedMap()
@@ -131,7 +93,8 @@ function tbWindow:OnInit()
 	self.window:Center()
 	
 	local frame = self:GetChild("frame")
-	frame.title = "Mod" .. XT("手机版快捷键桥")
+	frame.title = XT("手机版快捷键桥")
+	
 	local list = self:GetChild("list");
 	
 	for modName, p in MobileHotkeyBridgeMod.data:getOrderedPairs() do
