@@ -25,6 +25,7 @@ function Mod:checkAndAttachButton()
 		mainMenu:AddChild(openButton)
 		openButton.onClick:Add(
 			function()
+				tbWindow:updateList()
 				tbWindow:Show()
 			end
 		)
@@ -95,7 +96,13 @@ function tbWindow:OnInit()
 	
 	local frame = self:GetChild("frame")
 	frame.title = XT("快捷键连接器")
-	
+end
+
+function tbWindow:updateList()
+	if Mod.data == nil then
+		return
+	end
+
 	local list = self:GetChild("list");
 	
 	for modName, p in Mod.data:getOrderedPairs() do
