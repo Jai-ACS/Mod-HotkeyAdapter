@@ -78,7 +78,7 @@ function Mod:register(modName, modFunction, onActivated)
 		self.data = self.data or self:createOrderedMap()
 		
 		if self.data:get(modName) == nil then
-			self.data:set(modName, Mod:createOrderedMap())
+			self.data:set(modName, self:createOrderedMap())
 		end
 		
 		local p = self.data:get(modName)
@@ -93,8 +93,6 @@ function tbWindow:OnInit()
 	self.window.contentPane = UIPackage.CreateObject("Jai_HotkeyAdapter", "ModListWindow")
 	self.window.closeButton = self:GetChild("frame"):GetChild("n5")
 	self.window:Center()
-
-	CS.WorldLuaHelper().ShowMsgBox("window created")
 	
 	local frame = self:GetChild("frame")
 	frame.title = XT("快捷键连接器")
