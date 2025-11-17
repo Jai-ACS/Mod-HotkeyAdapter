@@ -1,12 +1,12 @@
 local Mod = GameMain:GetMod("Jai_HotkeyAdapter")
 
+local Windows = GameMain:GetMod("Windows")
+
 local function test()
 	local win = Windows:CreateWindow("ModListWindow")
 	CS.WorldLuaHelper():ShowMsgBox("Create")
 	return win
 end
-
-local Windows = GameMain:GetMod("Windows")
 -- local tbWindow = Windows:CreateWindow("ModListWindow")
 local tbWindow = test()
 
