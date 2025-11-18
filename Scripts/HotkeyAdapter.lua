@@ -101,7 +101,7 @@ function tbWindow:OnInit()
 
 	titleBox.maxWidth = 400
 	titleText.autoSize = CS.FairyGUI.AutoSizeType.Both
-	titleBox.width = titleText.width + 60
+	titleBox.width = titleText.width + 100
 	titleText.fontsize = 18
 	titleBox.height = 50
 	titleText:AddRelation(titleBox, CS.FairyGUI.RelationType.Middle_Middle)
@@ -115,9 +115,10 @@ function tbWindow:OnInit()
 	for modName, p in Mod.data:getOrderedPairs() do
 		local item = list:AddItemFromPool()
 		item:GetChild("name").text = modName
-		
+
+		local subList = item:GetChild("list")
 		for modFunction, onActivated in p:getOrderedPairs() do
-			local button = item:GetChild("list"):AddItemFromPool()
+			local button = subList:AddItemFromPool()
 			button.title = modFunction
 			button.fontsize = 16 -- Making text bigger
 			button.height = 35 -- Make the button taller too
@@ -128,6 +129,8 @@ function tbWindow:OnInit()
 			)
 		end
 
-		item:GetChild("list"):ResizeToFit()
+		subList:ResizeToFit()
+
+		item.height = subList.y + subList.height + 15
 	end
 end
