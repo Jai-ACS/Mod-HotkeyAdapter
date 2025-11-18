@@ -96,6 +96,13 @@ function tbWindow:OnInit()
 	local frame = self:GetChild("frame")
 	frame.title = XT("快捷键连接器")
 
+	local titleBox = frame:GetChild("n6")
+	local titleText = frame:GetChild("title")
+
+	titleBox.maxX = 400
+	titleText.autoSize = CS.FairyGUI.AutoSizeType.ShrinkAndExpand
+	titleBox.width = titleText.width
+
 	if Mod.data == nil then
 		return
 	end
@@ -109,8 +116,8 @@ function tbWindow:OnInit()
 		for modFunction, onActivated in p:getOrderedPairs() do
 			local button = item:GetChild("list"):AddItemFromPool()
 			button.title = modFunction
-			-- button.fontsize = 16 -- Making text bigger
-			-- button.height = 35 -- Make the button taller too
+			button.fontsize = 16 -- Making text bigger
+			button.height = 35 -- Make the button taller too
 			button.onClick:Add(
 				function()
 					onActivated()
