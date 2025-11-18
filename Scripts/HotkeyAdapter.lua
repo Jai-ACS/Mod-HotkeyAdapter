@@ -101,7 +101,7 @@ function tbWindow:OnInit()
 
 	titleBox.maxWidth = 400
 	titleText.autoSize = CS.FairyGUI.AutoSizeType.Both
-	titleBox.width = titleText.width
+	titleBox.width = titleText.width + 60
 
 	if Mod.data == nil then
 		return
