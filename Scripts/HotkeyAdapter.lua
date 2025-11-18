@@ -109,8 +109,8 @@ function tbWindow:OnInit()
 		for modFunction, onActivated in p:getOrderedPairs() do
 			local button = item:GetChild("list"):AddItemFromPool()
 			button.title = modFunction
-			button.fontsize = 16 -- Making text bigger
-			button.height = 35 -- Make the button taller too
+			-- button.fontsize = 16 -- Making text bigger
+			-- button.height = 35 -- Make the button taller too
 			button.onClick:Add(
 				function()
 					onActivated()
