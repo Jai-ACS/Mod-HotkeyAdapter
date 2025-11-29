@@ -3,6 +3,12 @@ local Mod = GameMain:GetMod("Jai_HotkeyAdapter")
 local Windows = GameMain:GetMod("Windows")
 local tbWindow = Windows:CreateWindow("ModListWindow")
 
+function Mod:OnInit()
+	if (MultiLanguage ~= nil) then
+		MultiLanguage:Load("Jai_HotkeyAdapter")
+	end
+end
+
 function Mod:OnRender()
 	-- Using OnRender() because the game seems to programmatically change the UI components when switching between sect and map exploration screens
 	
