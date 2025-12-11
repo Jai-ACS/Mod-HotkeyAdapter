@@ -94,7 +94,7 @@ function Mod:register(modName, modFunction, onActivated)
 	return false
 end
 
-function OnWindowInit()
+function OnWindowInit(self)
 	self.window.contentPane = UIPackage.CreateObject("Jai_HotkeyAdapter", "ModListWindow")
 	self.window.closeButton = self:GetChild("frame"):GetChild("n5")
 	self.window:Center()
