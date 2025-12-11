@@ -1,5 +1,8 @@
 local Mod = GameMain:GetMod("Jai_HotkeyAdapter")
 
+local Windows = GameMain:GetMod("Windows")
+local tbWindow = Windows:CreateWindow("ModListWindow")
+
 function Mod:OnInit()
 	if (MultiLanguage ~= nil) then
 		MultiLanguage:Load("Jai_HotkeyAdapter")
@@ -28,9 +31,6 @@ function Mod:checkAndAttachButton()
 		mainMenu:AddChild(openButton)
 		openButton.onClick:Add(
 			function()
-				local Windows = GameMain:GetMod("Windows")
-				local tbWindow = Windows:CreateWindow("ModListWindow")
-				tbWindow.OnInit = OnWindowInit
 				tbWindow:Show()
 			end
 		)
@@ -94,7 +94,7 @@ function Mod:register(modName, modFunction, onActivated)
 	return false
 end
 
-function OnWindowInit(self)
+function tbWindow:OnInit()
 	self.window.contentPane = UIPackage.CreateObject("Jai_HotkeyAdapter", "ModListWindow")
 	self.window.closeButton = self:GetChild("frame"):GetChild("n5")
 	self.window:Center()
